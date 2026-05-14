@@ -1,0 +1,20 @@
+# Uploaded ID Documents (sensitive)
+uploads/id_documents/*
+!uploads/id_documents/.gitkeep
+
+# Configuration files with credentials
+email_config.php
+
+# System files
+.DS_Store
+Thumbs.db
+
+# IDE files
+.vscode/
+.idea/
+*.swp
+*.swo
+
+# Logs
+*.log
+error_log

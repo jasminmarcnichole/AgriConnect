@@ -6,8 +6,10 @@ CREATE TABLE users (
     full_name VARCHAR(120) NOT NULL,
     email VARCHAR(120) NOT NULL UNIQUE,
     password_hash VARCHAR(255) NOT NULL,
-    role ENUM('buyer', 'seller') NOT NULL,
+    role ENUM('buyer', 'seller', 'admin') NOT NULL,
     bio TEXT NULL,
+    verification_status ENUM('pending', 'approved', 'rejected') DEFAULT 'approved',
+    id_document VARCHAR(255) NULL,
     created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
 );
 
@@ -17,6 +19,8 @@ CREATE TABLE products (
     title VARCHAR(150) NOT NULL,
     description TEXT NOT NULL,
     price DECIMAL(10,2) NOT NULL,
+    stock INT DEFAULT 0,
+    image VARCHAR(255) NULL,
     created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
     FOREIGN KEY (seller_id) REFERENCES users(id) ON DELETE CASCADE
 );
@@ -42,3 +46,7 @@ CREATE TABLE messages (
     FOREIGN KEY (conversation_id) REFERENCES conversations(id) ON DELETE CASCADE,
     FOREIGN KEY (sender_id) REFERENCES users(id) ON DELETE CASCADE
 );
+
+-- Insert default admin account (password: admin123)
+INSERT INTO users (full_name, email, password_hash, role, verification_status) 
+VALUES ('Admin', 'admin@agriconnect.com', '$2y$10$92IXUNpkjO0rOQ5byMi.Ye4oKoEa3Ro9llC/.og/at2.uheWG/igi', 'admin', 'approved');
